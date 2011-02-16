@@ -90,7 +90,9 @@
  
   </Commands>
 
-
+  <KeyBindings>
+    <KeyBinding guid="guidKillCassiniCmdSet" id="cmdidKillCassini" editor="guidVSStd97" key1="K" mod1="Alt Shift" />
+  </KeyBindings>
 
 
 
