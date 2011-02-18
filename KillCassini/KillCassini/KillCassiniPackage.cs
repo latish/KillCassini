@@ -15,16 +15,8 @@ namespace LatishSehgal.KillCassini
     [Guid(GuidList.guidKillCassiniPkgString)]
     public sealed class KillCassiniPackage : Package
     {
-        private IVsOutputWindowPane _debugPane;
-
-        public KillCassiniPackage()
-        {
-            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-        }
-
         protected override void Initialize()
         {
-            Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -43,15 +35,16 @@ namespace LatishSehgal.KillCassini
                 var processesKilled = CassiniUtil.KillAllCassiniInstances();
 
                 DebugPane.Activate();
-                DebugPane.OutputString("KillCassini: Mission Acquired. Hunting... \r\n");
+                DebugPane.OutputString(string.Format("{0}: Mission Acquired. Hunting... \r\n",PackageName));
                 processesKilled.ForEach(p => DebugPane
-                            .OutputString(String.Format("KillCassini: Killed {0}: Id= {1}, Handle= {2}.\r\n", 
-                            p.Name, p.Id, p.Handle)));
-                DebugPane.OutputString("KillCassini: Over and Out. \r\n");
+                            .OutputString(String.Format("{0}: Killed {1}: Id= {2}, Handle= {3}.\r\n",
+                            PackageName,p.Name, p.Id, p.Handle)));
+                TaskBarUtil.RefreshNotificationArea();
+                DebugPane.OutputString(string.Format("{0}: Over and Out. \r\n",PackageName));
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
+                Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Exception: {0}", exception.Message));
             }
         }
 
@@ -69,5 +62,8 @@ namespace LatishSehgal.KillCassini
                 return _debugPane;
             }
         }
+
+        private IVsOutputWindowPane _debugPane;
+        private const string PackageName = "KillCassini";
     }
 }
