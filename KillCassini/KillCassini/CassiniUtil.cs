@@ -8,7 +8,7 @@ namespace LatishSehgal.KillCassini
     {
         public static List<ProcessInfo> KillAllCassiniInstances()
         {
-            var processNames = new[] { "WebDev.WebServer", "WebDev.WebServer20", "WebDev.WebServer40" };
+            var processNames = new[] { "WebDev.WebServer", "WebDev.WebServer20", "WebDev.WebServer40", "iisexpress" };
 
             var processesKilled = new List<ProcessInfo>();
             foreach (var runningProcess in processNames.Select(Process.GetProcessesByName).SelectMany(p => p))
