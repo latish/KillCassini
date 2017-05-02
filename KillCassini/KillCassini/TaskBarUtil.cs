@@ -19,10 +19,9 @@ namespace LatishSehgal.KillCassini
         private static void RefreshWindow(IntPtr windowHandle)
         {
             const uint wmMousemove = 0x0200;
-            RECT rect;
-            GetClientRect(windowHandle, out rect);
+			GetClientRect(windowHandle, out RECT rect);
 
-            for (var x = 0; x < rect.right; x += 5)
+			for (var x = 0; x < rect.right; x += 5)
                 for (var y = 0; y < rect.bottom; y += 5)
                     SendMessage(
                         windowHandle,
